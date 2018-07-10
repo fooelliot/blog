@@ -27,3 +27,25 @@ try{
     case _: Exception => print("xxx")
     case ex:java.io.IOException => print(ex)
 }
+
+
+val arr:Array[Int] = new Array[Int](4);
+val arr = Array[Int](5)
+val arr = Array[][]()();
+
+var arr = new Array[Array[Int]](4)
+
+for((k,v)<-map2) println(k + "---" + v)
+
+class Person{
+        private var i = 0;
+        def incre(a:Int) = {i+=a}
+        def current()=i
+    }
+
+
+trait supperMan{def log1() = println("hello log1")}
+
+trait extends supperMan supperLyon{def log2() = println("hello log2")}
+
+trait man extends supperMan with supperLyon{}
