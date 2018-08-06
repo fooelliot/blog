@@ -37,15 +37,21 @@ $ git fetch                                       获取最新版本到本地不
 ```
 2）git(branch)操作相关命令
 ```
-$ git branch                            查看分支-a[所有]-r[远程]	
+$ git branch                            查看分支
 $ git branch -D master develop          删除本地库develop
 $ git branch -d [name]                  删除已经参与了合并的分支
 $ git branch [dev] [master]             在master创建dev分支
+$ git branch -v                         查看各个分支最后提交信息
+$ git branch -r                         查看远程分支信息
+$ git branch -a                         查看所有分支信息
 $ git branch -m [aaa] [bbb]             将aaa 重命名为bbb
 $ git branch [name]                     创建本地分支
 $ git checkout [name]                   切换分支
 $ git checkout --track origin/dev       切换到远程dev分支
 $ git checkout -b [name]                从当前分支新建并切换到name
+$ git checkout -b <new_br> <br>         基于branch创建新的new_branch
+$ git checkout -d <branch>              删除某个分支
+$ git checkout -D <branch>  强制删除某个分支 (未被合并的分支被删除的时候需要强制)
 $ git merge [name] 	                    将名称为[name]的分支与当前分支合并
 $ git merge origin/dev                  将分支dev与当前分支进行合并
 ```
@@ -99,9 +105,27 @@ $ git reset --hard 【merge前的版本号】
 3) 编辑“ .git/config”文件，将子模块的相关配置节点删除掉
 4) 手动删除子模块残留的目录
 
-6）
+6）Git暂存管理
+git stash # 暂存
+git stash list # 列所有stash
+git stash apply # 恢复暂存的内容
+git stash drop # 删除暂存区
 
-7)
+
+7)Git远程分支管理
+
+git pull # 抓取远程仓库所有分支更新并合并到本地
+git pull --no-ff # 抓取远程仓库所有分支更新并合并到本地，不要快进合并
+git fetch origin # 抓取远程仓库更新
+git merge origin/master # 将远程主分支合并到本地当前分支
+git co --track origin/branch # 跟踪某个远程分支创建相应的本地分支
+git co -b <local_branch> origin/<remote_branch> # 基于远程分支创建本地分支，功能同上
+git push # push所有分支
+git push origin master # 将本地主分支推到远程主分支
+git push -u origin master # 将本地主分支推到远程(如无远程主分支则创建，用于初始化远程仓库)
+git push origin <local_branch> # 创建远程分支， origin是远程仓库名
+git push origin <local_branch>:<remote_branch> # 创建远程分支
+git push origin :<remote_branch> #先删除本地分支(git br -d <branch>)，然后再push删除远程分支
 
 8)
 
