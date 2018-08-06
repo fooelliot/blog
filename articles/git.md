@@ -1,17 +1,21 @@
 # git 常用命令详解
 ## Git 是一个很强大的分布式版本控制系统。它不但适用于管理大型开源软件的源代码，管理私人的文档和源代码也有很多优势。
-1) Git常用操作命令
+## 1) Git文件操作
 ```
-$ git clone [git@xxx]                             克隆远程仓库
-$ git remote -v                                   查看远程仓库
-$ git remote show [name]                          查看远程仓库
-$ git remote add [name] [url]                     添加远程仓库
-$ git remote rm [name]                            删除远程仓库
-$ git remote set-url --push [name] [newUrl]       修改远程仓库
-$ git pull [rName] [lhName]                       拉取远程分支
-$ git push [rName] [lName]                        推送远程分支
-$ git push origin [lname]:[rname]                 本地分支push到远程
-$ git push origin -d [name]                       删除远程分支-d也可以用--delete
+$ git help [command]                        # 显示command的help
+$ git show [$id]                              # 显示某次提交的内容 
+$ git checkout  [file]                      # 抛弃工作区修改
+$ git checkout .                            # 抛弃工作区修改
+$ git add [file]                            # 将工作文件修改提交到本地暂存区
+$ git add .                                 # 将所有修改过的工作文件提交暂存区
+$ git rm [file]                             # 从版本库中删除文件
+$ git rm --cached [file]                    # 从版本库中删除文件，但不删除文件
+$ git reset <file> # 从暂存区恢复到工作文件
+$ git reset -- . # 从暂存区恢复到工作文件
+$ git reset --hard # 恢复最近一次提交过的状态，即放弃上次提交后的所有本次修改
+$ git ci --amend # 修改最后一次提交记录
+$ git revert <$id> # 恢复某次提交的状态，恢复动作本身也创建次提交对象
+$ git revert HEAD # 恢复最后一次提交的状态
 $ git status                                      查看当前工作区状态 
 $ git config --list                               看所有用户
 $ git ls-files                                    查看已经被提交的文件
@@ -51,7 +55,7 @@ $ git checkout --track origin/dev       切换到远程dev分支
 $ git checkout -b [name]                从当前分支新建并切换到name
 $ git checkout -b <new_br> <br>         基于branch创建新的new_branch
 $ git checkout -d <branch>              删除某个分支
-$ git checkout -D <branch>  强制删除某个分支 (未被合并的分支被删除的时候需要强制)
+$ git checkout -D <branch>              强制删除某个分支 (未被合并的分支被删除的时候需要强制)
 $ git merge [name] 	                    将名称为[name]的分支与当前分支合并
 $ git merge origin/dev                  将分支dev与当前分支进行合并
 ```
@@ -105,6 +109,7 @@ $ git reset --hard 【merge前的版本号】
 3) 编辑“ .git/config”文件，将子模块的相关配置节点删除掉
 4) 手动删除子模块残留的目录
 
+
 6）Git暂存管理
 git stash # 暂存
 git stash list # 列所有stash
@@ -113,7 +118,6 @@ git stash drop # 删除暂存区
 
 
 7)Git远程分支管理
-
 git pull # 抓取远程仓库所有分支更新并合并到本地
 git pull --no-ff # 抓取远程仓库所有分支更新并合并到本地，不要快进合并
 git fetch origin # 抓取远程仓库更新
@@ -127,7 +131,48 @@ git push origin <local_branch> # 创建远程分支， origin是远程仓库名
 git push origin <local_branch>:<remote_branch> # 创建远程分支
 git push origin :<remote_branch> #先删除本地分支(git br -d <branch>)，然后再push删除远程分支
 
-8)
+$ git clone [git@xxx]                             克隆远程仓库
+$ git remote -v                                   查看远程仓库
+$ git remote show [name]                          查看远程仓库
+$ git remote add [name] [url]                     添加远程仓库
+$ git remote rm [name]                            删除远程仓库
+$ git remote set-url --push [name] [newUrl]       修改远程仓库
+$ git pull [rName] [lhName]                       拉取远程分支
+$ git push [rName] [lName]                        推送远程分支
+$ git push origin [lname]:[rname]                 本地分支push到远程
+$ git push origin -d [name]                       删除远程分支-d也可以用--delete
+
+8)Git远程仓库管理
+
+git remote -v # 查看远程服务器地址和仓库名称
+
+git remote show origin # 查看远程服务器仓库状态
+
+git remote add origin git@ github:robbin/robbin_site.git # 添加远程仓库地址
+
+git remote set-url origin git@ github.com:robbin/robbin_site.git # 设置远程仓库地址(用于修改远程仓库地址) git remote rm <repository> # 删除远程仓库
+
+创建远程仓库
+
+git clone --bare robbin_site robbin_site.git # 用带版本的项目创建纯版本仓库
+
+scp -r my_project.git git@ git.csdn.net:~ # 将纯仓库上传到服务器上
+
+mkdir robbin_site.git && cd robbin_site.git && git --bare init # 在服务器创建纯仓库
+
+git remote add origin git@ github.com:robbin/robbin_site.git # 设置远程仓库地址
+
+git push -u origin master # 客户端首次提交
+
+git push -u origin develop # 首次将本地develop分支提交到远程develop分支，并且track
+
+git remote set-head origin master # 设置远程仓库的HEAD指向master分支
+
+也可以命令设置跟踪远程库和本地库
+
+git branch --set-upstream master origin/master
+
+git branch --set-upstream develop origin/develop
 
 9）忽略一些文件、文件夹不提交
 在仓库根目录下创建名称为“.gitignore”的文件，写入不需要的文件夹名或文件，每个元素占一行即可，如
